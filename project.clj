@@ -3,7 +3,7 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :min-lein-version "2.0.0"
+  :min-lein-version "2.7.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring/ring-jetty-adapter "1.5.1"]
                  [compojure "1.5.2"]]
