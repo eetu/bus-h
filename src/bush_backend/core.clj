@@ -13,7 +13,7 @@
   (GET "/" [] "Hello world!"))
 
 (def application
-  (let [handler (handler/site routes)]
+  (let [handler #'routes]
     (if (env :dev)
       (-> handler
           wrap-reload)
