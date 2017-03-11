@@ -10,4 +10,5 @@
   :ring {:handler bush-backend.core/application}
   :main ^:skip-aot bush-backend.core
   :repl-options {:init-ns bush-backend.core}
-  :uberjar-name "bush-backend.jar")
+  :uberjar-name "bush-backend.jar"
+  :profiles {:uberjar {:aot :all}})

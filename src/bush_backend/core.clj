@@ -2,7 +2,8 @@
   (:require [compojure.core :refer [defroutes GET]]
             [ring.adapter.jetty :as ring]
             [compojure.route :as route]
-            [compojure.handler :as handler]))
+            [compojure.handler :as handler])
+  (:gen-class))
 
 (defroutes routes
   (GET "/" [] "Hello world!"))
