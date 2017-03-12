@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -jar target/bush-backend.jar
+web: lein with-profile production trampoline run
