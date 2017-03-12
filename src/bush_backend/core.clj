@@ -3,28 +3,35 @@
             [environ.core :refer [env]]
             [new-reliquary.ring :refer [wrap-newrelic-transaction]]
             [ring.adapter.jetty :as ring]
+            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
+            [ring.middleware.json :refer [wrap-json-response]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.reload :refer [wrap-reload]]
             [compojure.route :as route]
-            [compojure.handler :as handler])
+            [compojure.handler :as handler]
+            [bush-backend.controllers.arrivals :as arrivals])
   (:gen-class))
 
 (defroutes routes
-  (GET "/" [] "Hello world!"))
+           arrivals/routes)
+
+(defn defaults [handler]
+  (-> (wrap-defaults handler api-defaults)
+      wrap-json-response))
 
 (def application
-  (let [handler #'routes]
-    (if (env :dev)
-      (-> handler
-          wrap-reload)
-      (-> handler
-          wrap-params
-          wrap-newrelic-transaction))))
+  (if (env :dev)
+    (-> routes
+        wrap-reload
+        defaults)
+    (-> routes
+        defaults
+        wrap-newrelic-transaction)))
 
 (defn start [port]
   (ring/run-jetty application {:port port
                                :join? false}))
 
 (defn -main []
-  (let [port (Integer. (or (System/getenv "PORT") "8080"))]
+  (let [port (Integer. (or (env :port) "8080"))]
     (start port)))
